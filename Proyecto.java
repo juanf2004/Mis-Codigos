@@ -3,6 +3,7 @@ package Proyecto;
 import javax.swing.*;
 
 
+
 public class Prueba1
 {
     static int opcionprincipal;
@@ -36,36 +37,16 @@ public class Prueba1
                     {true,false,true,true,true,true,false,false,true,true,true,false,false,true,true,true},
                     {true,false,true,true,true,true,false,false,true,true,true,false,false,true,true,true}
             };
-    static int [][] Tabladeposiciones =
-            {
-                    {5,5,0,0,18,6,12},
-                    {5,3,1,1,26,9,17},
-                    {5,2,1,2,21,12,9},
-                    {5,2,1,2,14,19,-5},
-                    {5,1,1,3,8,26,-18},
-                    {5,0,0,5,6,21,-15}
-            };
-    static String [][] Resultadosdelajornada =
-            {
-                    {"1 vs 2","3 vs 4","5 vs 6"},
-                    {"1 vs 3","4 vs 6","2 vs 5"},
-                    {"1 vs 4","2 vs 6","3 vs 5"},
-                    {"1 vs 5","2 vs 4","3 vs 6"},
-                    {"1 vs 6","2 vs 3","4 vs 5"},
-            };
-    static String [][] Resultadosdelajornadaganados =
-            {
-                    {"Gano el equipo 1","Gano el equipo 3","Empatados"},
-                    {"Gano el equipo 3","Gano el equipo 6","Gano el equipo 5"},
-                    {"Empatados","Gano el equipo 6","Gano el equipo 3"},
-                    {"Gano el equipo 1","Gano el equipo 4","Gano el equipo 3"},
-                    {"Gano el equipo 1","Gano el equipo 3","Gano el equipo 4"},
-            };
+
+    static int[][] partidos = new int[6][6];
+    static int[][] resultadosdelajornada= new int[6][6];
+    static int[][] tabladeconteo= new int[6][5];
 
     public  static void main(String[] args)
     {
 
         {
+
             while (opcionprincipal!=6){
             menu();
 
@@ -77,13 +58,18 @@ public class Prueba1
                 Tabladeposiciones();
             }else if (opcionprincipal==3)
             {
-                Resultadosdelajornada();
+                partidosdeunajornada();
+
             }else if (opcionprincipal==4)
             {
-                Iniciarjuego();
+                partidosporjornada();
+
             }else if (opcionprincipal==5)
             {
-                Simularcampeonato();
+                Todoscontratodos();
+                partidosporjornada();
+                resultadosdelajornada();
+                contadegoles();
             }
             }
         }
@@ -91,7 +77,7 @@ public class Prueba1
     }
     public static void menu()
     {
-        opcionprincipal=Integer.parseInt(JOptionPane.showInputDialog("Digite opcion \n 1.Administrar un equipo  \n 2.Tabla de posiciones \n 3.Resultados de la jornada \n 4.Iniciar juego \n 5.Simular campeonato \n 6.Salir"));
+        opcionprincipal=Integer.parseInt(JOptionPane.showInputDialog("Digite opcion \n 1.Administrar un equipo  \n 2.Tabla de posiciones \n 3.Resultados de la jornada \n 4.Iniciar juego\n 5.Iniciar campeonato \n 6.Salir"));
     }
     public static void Administrarunequipo ()
     {
@@ -203,31 +189,162 @@ public class Prueba1
     }
     public static void Tabladeposiciones ()
     {
-        int numeroequipo;
-        System.out.println("Leyenda\n 1.Jugados\n 2.Ganados\n 3.Empatados\n 4.Perdidos\n 5.Goles a favor\n 6.Goles en contra\n 7.Diferencia");
-        numeroequipo=Integer.parseInt(JOptionPane.showInputDialog("Digite el equipo \n 1.Equipo 1\n 2.Equipo 2\n 3.Equipo 3\n 4.Equipo 4\n 5.Equipo 5\n 6.Equipo 6\n 7.Salir"));
-        for (int i=0;i<7;i++)
+        int tabladeposiciones[][]= new int[6][2];
+        for (int i=0;i<6;i++)
         {
-            System.out.println(Tabladeposiciones[numeroequipo-1][i]);
+            tabladeposiciones[i][1]=tabladeconteo[i][0]*2+tabladeconteo[i][1];
+            tabladeposiciones[i][0]=i+1;
+            System.out.println();
+            System.out.println("Equipo "+(i+1)+" con "+tabladeposiciones[i][1]+" puntos ");
         }
     }
-    public static void Resultadosdelajornada ()
+    public static void Todoscontratodos()
     {
-        int numjornada;
-        numjornada=Integer.parseInt(JOptionPane.showInputDialog("Digite la jornada \n 1.jornada 1\n 2.jornada 2\n 3.jornada 3\n 4.jornada 4\n 5.jornada 5"));
+        int jornada;
+        for (int i=0;i<6;i++)
+        {
+            for (int j=0;j<6;j++)
+            {
+                if (i==j)
+                {
+                    partidos[i][j]=-1;
+                }else{
+                    partidos[i][j]=0;
+                }
+            }
+        }
+        for (jornada=1;jornada<=5;jornada++)
+        {
+            for (int i=0;i<3;i++)
+            {
+                int e1=(int) (Math.random() * 6 + 0);
+                int e2=(int) (Math.random() * 6 + 0);
+                if (partidos[e1][e2] != 0)
+                {
+                    while (partidos[e1][e2] != 0)
+                    {
+                        e1 = (int) (Math.random() * 6 + 0);
+                        e2 = (int) (Math.random() * 6 + 0);
+                    }
+                }
+                partidos[e1][e2]=jornada;
+                partidos[e2][e1]=jornada;
+            }
+        }
+        for (int i=0;i<6;i++)
+        {
+            System.out.println(" ");
+            for (int j=0;j<6;j++)
+            {
+                System.out.print(partidos[i][j]+" ");
+            }
+        }
+    }
+    public static void partidosporjornada()
+    {
+        System.out.println();
+        int jornada;
+        for (jornada=1;jornada<6;jornada++)
+        {
+            System.out.println("Jornada"+jornada);
+            for (int i=0;i<6;i++)
+            {
+                for (int j=i+1;j<6;j++)
+                {
+                    if (partidos[i][j]==jornada)
+                {
+                    System.out.println("Equipo"+(i+1)+" Vs "+"Equipo"+(j+1));
+                    System.out.println(resultadosdelajornada[i][j]+"goles"+"Vs"+resultadosdelajornada[j][i]+"goles");
+                }
+                }
+            }
+        }
+    }
+    public static void resultadosdelajornada()
+    {
+        for (int i=0;i<6;i++)
+        {
+            for (int j=0;j<6;j++)
+            {
+                if (i==j)
+                {
+                    resultadosdelajornada[i][j]=-1;
+                }else{
+                    resultadosdelajornada[i][j]=(int) (Math.random() * 4 + 0);
+                }
+            }
+        }
+        for (int i=0;i<6;i++)
+        {
+            System.out.println(" ");
+            for (int j=0;j<6;j++)
+            {
+                System.out.print(resultadosdelajornada[i][j]+" ");
+            }
+        }
+    }
+    public static void partidosdeunajornada()
+    {
+        System.out.println();
+        int jornada=Integer.parseInt(JOptionPane.showInputDialog("Digite jornada"));
 
-        System.out.println("Jornada "+numjornada);
-        for (int i=0;i<3;i++)
+            System.out.println("Jornada"+jornada);
+            for (int i=0;i<6;i++)
+            {
+                for (int j=i+1;j<6;j++)
+                {
+                    if (partidos[i][j]==jornada)
+                    {
+                        System.out.println("Equipo "+(i+1)+" Vs "+"Equipo "+(j+1));
+                        System.out.println(resultadosdelajornada[i][j]+" goles "+"Vs "+resultadosdelajornada[j][i]+" goles");
+                    }
+                }
+            }
+    }
+    public static void contadegoles()
+    {
+        int Juegosganados=0,juegosempatados=0,juegosperdidos=0,contagoles=0,contagolescontra=0;
+        for (int i=0;i<6;i++)
         {
-            System.out.println(Resultadosdelajornada[numjornada-1][i]+" "+Resultadosdelajornadaganados[numjornada-1][i]);
+            Juegosganados=0;
+            juegosempatados=0;
+            juegosperdidos=0;
+            contagoles=0;
+            contagolescontra=0;
+            System.out.println();
+            for (int j=0;j<6;j++)
+            {
+                if (i!=j)
+                {
+                    if (resultadosdelajornada[i][j]>resultadosdelajornada[j][i])
+                    {
+                        Juegosganados=Juegosganados+1;
+                    }else if (resultadosdelajornada[i][j]==resultadosdelajornada[j][i])
+                    {
+                        juegosempatados=juegosempatados+1;
+                    }else if (resultadosdelajornada[i][j]<resultadosdelajornada[j][i])
+                    {
+                        juegosperdidos=juegosperdidos+1;
+                    }
+                    contagoles=contagoles+resultadosdelajornada[i][j];
+                    contagolescontra=contagolescontra+resultadosdelajornada[j][i];
+                }
+            }
+            tabladeconteo[i][0]=Juegosganados;
+            tabladeconteo[i][1]=juegosempatados;
+            tabladeconteo[i][2]=juegosperdidos;
+            tabladeconteo[i][3]=contagoles;
+            tabladeconteo[i][4]=contagolescontra;
+
         }
-    }
-    public static void Iniciarjuego ()
-    {
-        System.out.println("Iniciarjuego");
-    }
-    public static void Simularcampeonato ()
-    {
-        System.out.println("Simular campeonato");
+        for (int i=0;i<6;i++)
+        {
+            System.out.println();
+            for (int j=0;j<5;j++)
+            {
+                System.out.print(tabladeconteo[i][j]+" ");
+            }
+        }
     }
 }
+
