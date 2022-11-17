@@ -199,21 +199,7 @@ public class Prueba1
             System.out.println();
             System.out.println("Equipo "+(i+1)+" con "+tabladeposiciones[i][1]+" puntos con "+tabladeposiciones[i][2]+" juegos ganandos");
         }
-        for (int i=0;i<6;i++)
-        {
-            for (int j=0;j<5;j++)
-            {
-                if (tabladeposiciones[j][1]<tabladeposiciones[j][1])
-                {
-                    
-                }else if (tabladeposiciones[j][1]==tabladeposiciones[j][1])
-                {
-                    
-                }
-            }
-        }
-
-
+       
     }
     public static void Todoscontratodos()
     {
