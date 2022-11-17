@@ -7,7 +7,7 @@ import javax.swing.*;
 public class Prueba1
 {
     static int opcionprincipal;
-    static int [] capitanes={1,1,1,1,1,1};//El 4 no se hace,y en el 6 no se cuentan los arbitros y el jugador el tipo de gol y el minuto.
+    static int [] capitanes={1,1,1,1,1,1};
     static String [][] Nombres  =
             {
                     {"Armando","Abel","Antonio","Andrea","Andres","Alejandro","Andreas","Adriana","Amanda","Aurora","Amparo","Aquiles","Adolfo","Alberto","Alvaro","Alfredo"},
@@ -189,14 +189,31 @@ public class Prueba1
     }
     public static void Tabladeposiciones ()
     {
-        int tabladeposiciones[][]= new int[6][2];
+        int[][] tabladeposiciones = new int[6][3];
+        int cotador=0,auxiliar;
         for (int i=0;i<6;i++)
         {
             tabladeposiciones[i][1]=tabladeconteo[i][0]*2+tabladeconteo[i][1];
             tabladeposiciones[i][0]=i+1;
+            tabladeposiciones[i][2]=tabladeconteo[i][0];
             System.out.println();
-            System.out.println("Equipo "+(i+1)+" con "+tabladeposiciones[i][1]+" puntos ");
+            System.out.println("Equipo "+(i+1)+" con "+tabladeposiciones[i][1]+" puntos con "+tabladeposiciones[i][2]+" juegos ganandos");
         }
+        for (int i=0;i<6;i++)
+        {
+            for (int j=0;j<5;j++)
+            {
+                if (tabladeposiciones[j][1]<tabladeposiciones[j][1])
+                {
+                    
+                }else if (tabladeposiciones[j][1]==tabladeposiciones[j][1])
+                {
+                    
+                }
+            }
+        }
+
+
     }
     public static void Todoscontratodos()
     {
@@ -347,4 +364,5 @@ public class Prueba1
         }
     }
 }
+
 
